@@ -39,7 +39,7 @@ const update = async (req, res) => {
       res.status(400).json({
         status: false,
         message:
-          "Ingredients is invalid! Must be greater than or equal to 2 ingredients",
+          "Ingredients is invalid! Must be greater than or equal to 2 ingredients. Separate with commas",
       });
       return;
     }
