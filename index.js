@@ -14,6 +14,8 @@ const createRecipe = require("./recipes/create");
 const updateRecipe = require("./recipes/update");
 const deleteRecipe = require("./recipes/delete");
 
+const endPointInvalid = require("./endPointInvalid");
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -37,6 +39,11 @@ app.delete("/recipes/:id", deleteRecipe);
 app.get("/", (req, res) => {
   res.send("API For Food Recipe");
 });
+
+app.get("*", endPointInvalid);
+app.post("*", endPointInvalid);
+app.patch("*", endPointInvalid);
+app.delete("*", endPointInvalid);
 
 app.listen(3000, () => {
   console.log("App running in port 3000");
