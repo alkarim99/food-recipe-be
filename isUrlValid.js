@@ -1,12 +1,12 @@
-const URL = require("url").URL;
+const URL = require('url').URL
 
 const isUrlValid = (s) => {
   try {
-    new URL(s);
-    return true;
+    URL(s)
+    return true
   } catch (err) {
-    return false;
+    return false
   }
-};
+}
 
-module.exports = isUrlValid;
+module.exports = isUrlValid

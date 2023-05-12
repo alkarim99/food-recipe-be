@@ -1,12 +1,12 @@
-require("dotenv").config();
-const postgres = require("postgres");
+require('dotenv').config()
+const postgres = require('postgres')
 
 const sql = postgres({
-  host: process.env.HOST,
-  port: process.env.PORT,
-  database: process.env.DATABASE,
-  username: process.env.USERNAME_DB,
-  password: process.env.PASSWORD,
-}); // will use psql environment variables
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS
+}) // will use psql environment variables
 
-module.exports = sql;
+module.exports = sql
