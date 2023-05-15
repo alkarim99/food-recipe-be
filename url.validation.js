@@ -1,8 +1,8 @@
-const URL = require('url').URL
+const URL = require("url").URL
 
 const isUrlValid = (s) => {
   try {
-    URL(s)
+    new URL(s)
     return true
   } catch (err) {
     return false

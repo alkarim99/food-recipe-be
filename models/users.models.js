@@ -1,4 +1,4 @@
-const db = require('../database')
+const db = require("../database")
 
 const getAll = async (sortType) => {
   try {
@@ -18,15 +18,25 @@ const getById = async (id) => {
   }
 }
 
+const getByEmail = async (email) => {
+  try {
+    const query =
+      await db`SELECT * FROM users where LOWER(email) = LOWER(${email})`
+    return query
+  } catch (error) {
+    return error
+  }
+}
+
 const create = async (payload) => {
   try {
     const query = await db`INSERT INTO users ${db(
       payload,
-      'email',
-      'fullname',
-      'phoneNumber',
-      'password',
-      'profilePicture'
+      "email",
+      "fullname",
+      "phoneNumber",
+      "password",
+      "role"
     )} returning *`
     return query
   } catch (error) {
@@ -38,11 +48,23 @@ const update = async (payload, id) => {
   try {
     const query = await db`UPDATE users SET ${db(
       payload,
-      'email',
-      'fullname',
-      'phoneNumber',
-      'password',
-      'profilePicture'
+      "email",
+      "fullname",
+      "phoneNumber",
+      "password",
+      "role"
+    )} WHERE id = ${id} returning *`
+    return query
+  } catch (error) {
+    return error
+  }
+}
+
+const updatePhoto = async (payload, id) => {
+  try {
+    const query = await db`UPDATE users set ${db(
+      payload,
+      "profilePicture"
     )} WHERE id = ${id} returning *`
     return query
   } catch (error) {
@@ -62,7 +84,9 @@ const deleteUser = async (id) => {
 module.exports = {
   getAll,
   getById,
+  getByEmail,
   create,
   update,
-  deleteUser
+  updatePhoto,
+  deleteUser,
 }

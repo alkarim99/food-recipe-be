@@ -1,11 +1,13 @@
-const router = require('express').Router()
-const recipesController = require('../controllers/recipes.controller')
+const router = require("express").Router()
+const recipesController = require("../controllers/recipes.controller")
+const middleware = require("../middleware/jwt.middleware")
 
-router.get('/recipes/:id', recipesController.getById)
-router.get('/recipes', recipesController.getAll)
-router.post('/recipes', recipesController.create)
-router.patch('/recipes/:id', recipesController.update)
-router.delete('/recipes/:id', recipesController.deleteRecipes)
-router.post('/recipes/seeder', recipesController.seeder)
+router.get("/recipes/:id", middleware, recipesController.getById)
+router.get("/recipes", middleware, recipesController.getAll)
+router.post("/recipes", middleware, recipesController.create)
+router.patch("/recipes/photo/:id", middleware, recipesController.updatePhoto)
+router.patch("/recipes/:id", middleware, recipesController.update)
+router.delete("/recipes/:id", middleware, recipesController.deleteRecipes)
+router.post("/recipes/seeder", middleware, recipesController.seeder)
 
 module.exports = router

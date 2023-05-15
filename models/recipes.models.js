@@ -1,12 +1,18 @@
-const db = require('../database')
+const db = require("../database")
 
-const getAll = (keyword, sort) => {
+const getAll = (keyword, sort, userId) => {
   try {
     let query
     if (keyword != null) {
-      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) ORDER BY id ${sort}`
+      if (userId != null) {
+        query = db`SELECT recipes.id AS recipes_id, *, count(*) OVER() AS full_count FROM recipes JOIN users ON users.id = recipes.user_id WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) and users.id = ${userId} ORDER BY recipes.id ${sort}`
+      } else {
+        query = db`SELECT *, count(*) OVER() AS full_count FROM recipes WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) ORDER BY recipes.id ${sort}`
+      }
+    } else if (userId != null) {
+      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes JOIN users ON users.id = recipes.user_id WHERE users.id = ${userId} ORDER BY recipes.id ${sort}`
     } else {
-      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes ORDER BY id ${sort}`
+      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes ORDER BY recipes.id ${sort}`
     }
     return query
   } catch (error) {
@@ -27,10 +33,11 @@ const create = async (payload) => {
   try {
     const query = await db`INSERT INTO recipes ${db(
       payload,
-      'recipePicture',
-      'title',
-      'ingredients',
-      'videoLink'
+      "recipePicture",
+      "title",
+      "ingredients",
+      "videoLink",
+      "user_id"
     )} returning *`
     return query
   } catch (error) {
@@ -42,10 +49,22 @@ const update = async (payload, id) => {
   try {
     const query = await db`UPDATE recipes SET ${db(
       payload,
-      'recipePicture',
-      'title',
-      'ingredients',
-      'videoLink'
+      "title",
+      "ingredients",
+      "videoLink",
+      "user_id"
+    )} WHERE id = ${id} returning *`
+    return query
+  } catch (error) {
+    return error
+  }
+}
+
+const updatePhoto = async (payload, id) => {
+  try {
+    const query = await db`UPDATE recipes set ${db(
+      payload,
+      "recipePicture"
     )} WHERE id = ${id} returning *`
     return query
   } catch (error) {
@@ -67,5 +86,6 @@ module.exports = {
   getById,
   create,
   update,
-  deleteRecipe
+  updatePhoto,
+  deleteRecipe,
 }
