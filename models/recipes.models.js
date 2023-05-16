@@ -7,12 +7,12 @@ const getAll = (keyword, sort, userId) => {
       if (userId != null) {
         query = db`SELECT recipes.id AS recipes_id, *, count(*) OVER() AS full_count FROM recipes JOIN users ON users.id = recipes.user_id WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) and users.id = ${userId} ORDER BY recipes.id ${sort}`
       } else {
-        query = db`SELECT *, count(*) OVER() AS full_count FROM recipes WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) ORDER BY recipes.id ${sort}`
+        query = db`SELECT recipes.id AS recipes_id, *, count(*) OVER() AS full_count FROM recipes WHERE LOWER(recipes.title) LIKE LOWER(${keyword}) ORDER BY recipes.id ${sort}`
       }
     } else if (userId != null) {
-      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes JOIN users ON users.id = recipes.user_id WHERE users.id = ${userId} ORDER BY recipes.id ${sort}`
+      query = db`SELECT recipes.id AS recipes_id, *, count(*) OVER() AS full_count FROM recipes JOIN users ON users.id = recipes.user_id WHERE users.id = ${userId} ORDER BY recipes.id ${sort}`
     } else {
-      query = db`SELECT *, count(*) OVER() AS full_count FROM recipes ORDER BY recipes.id ${sort}`
+      query = db`SELECT recipes.id AS recipes_id, *, count(*) OVER() AS full_count FROM recipes ORDER BY recipes.id ${sort}`
     }
     return query
   } catch (error) {

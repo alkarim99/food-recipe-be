@@ -235,7 +235,7 @@ const update = async (req, res) => {
         }
         const isEmailUnique = await emailValidation.isEmailUnique(
           payload.email,
-          id
+          checkData[0].id
         )
         if (isEmailUnique) {
           res.status(400).json({
@@ -273,12 +273,26 @@ const update = async (req, res) => {
           })
           return
         }
-        const query = await model.update(payload, checkData[0].id)
-        res.send({
-          status: true,
-          message: "Success edit data",
-          data: query,
-        })
+        if (password) {
+          bcrypt.genSalt(saltRounds, function (err, salt) {
+            bcrypt.hash(password, salt, async function (err, hash) {
+              payload.password = hash
+              const query = await model.update(payload, checkData[0].id)
+              res.send({
+                status: true,
+                message: "Success edit data",
+                data: query,
+              })
+            })
+          })
+        } else {
+          const query = await model.update(payload, checkData[0].id)
+          res.send({
+            status: true,
+            message: "Success edit data",
+            data: query,
+          })
+        }
       }
     )
   } catch (error) {

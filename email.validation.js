@@ -1,5 +1,5 @@
-const emailValidator = require('deep-email-validator')
-const db = require('./database')
+const emailValidator = require("deep-email-validator")
+const db = require("./database")
 
 const isEmailValid = (email) => {
   try {
