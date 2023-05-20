@@ -13,8 +13,8 @@ Food Recipe Back-End is an API that can collect recipes from top chefs around th
 
 Food Recipe Back-End uses a number of open source projects to work properly:
 
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
+- [node.js](https://nodejs.org/) - evented I/O for the backend
+- [Express](https://expressjs.com/) - fast node.js network app framework [@tjholowaychuk]
 - [PostgreSQL](https://www.postgresql.org/) - the powerfull database
 
 And of course Food Recipe Back-End itself is open source with a [public repository](https://github.com/alkarim99/food-recipe-be) on GitHub.
