@@ -1,8 +1,7 @@
 # Food Recipe Back-End
 Backend for Food Recipe built with Express and Postgres.
 
-[![Minimum node.js version](https://badgen.net/npm/node/express)](https://npmjs.com/package/express)
-
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 Food Recipe Back-End is an API that can collect recipes from top chefs around the world.
 
