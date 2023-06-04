@@ -22,11 +22,11 @@ app.use(bodyParser.json())
 app.use(helmet())
 app.use(xss())
 
-const corsOptions = {
-  origin: "https://google.com",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions))
+// const corsOptions = {
+//   origin: "https://google.com",
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
+// app.use(cors(corsOptions))
 // app.use(cors());
 
 app.use(

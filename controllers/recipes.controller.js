@@ -301,6 +301,7 @@ const updatePhoto = async (req, res) => {
             status: false,
             message: "Photo is required",
           })
+          return
         }
         let mimeType = photo.mimetype.split("/")[1]
         let allowFile = ["jpeg", "jpg", "png", "webp"]
@@ -309,12 +310,14 @@ const updatePhoto = async (req, res) => {
             status: false,
             message: "Only accept jpeg, jpg, png, webp",
           })
+          return
         }
         if (photo.size > 2000000) {
           res.status(400).send({
             status: false,
             message: "File to big, max size 2MB",
           })
+          return
         }
         const upload = cloudinary.uploader.upload(photo.tempFilePath, {
           public_id: new Date().toISOString(),
