@@ -27,7 +27,7 @@ app.use(xss())
 //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 // app.use(cors(corsOptions))
-// app.use(cors());
+app.use(cors())
 
 app.use(
   fileUpload({
@@ -49,6 +49,6 @@ app.get("/", (req, res) => {
 // Other routes
 app.use(invalidRoutes)
 
-app.listen(3000, () => {
-  console.log("App running in port 3000")
+app.listen(8000, () => {
+  console.log("App running in port 8000")
 })
