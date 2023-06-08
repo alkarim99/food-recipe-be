@@ -117,12 +117,12 @@ const create = async (req, res) => {
       return
     }
     const { recipePicture } = req?.files ?? {}
-    if (!recipePicture) {
-      res.status(400).send({
-        status: false,
-        message: "Recipe Picture is required",
-      })
-    }
+//     if (!recipePicture) {
+//       res.status(400).send({
+//         status: false,
+//         message: "Recipe Picture is required",
+//       })
+//     }
     let mimeType = recipePicture.mimetype.split("/")[1]
     let allowFile = ["jpeg", "jpg", "png", "webp"]
     if (!allowFile?.find((item) => item === mimeType)) {
