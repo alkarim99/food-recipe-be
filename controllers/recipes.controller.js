@@ -174,7 +174,7 @@ const create = async (req, res) => {
         }
         await model.create(payload)
         res.status(200).send({
-          status: false,
+          status: true,
           message: "Success insert data",
           data: payload,
         })
