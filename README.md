@@ -22,8 +22,9 @@ And of course Food Recipe Back-End itself is open source with a [public reposito
 
 [Postman Documentation](https://documenter.getpostman.com/view/20247883/2s946pZUaZ) <br>
 [Deploy Frontend](https://food-recipe-fe-react.vercel.app/) <br>
-[Release APK](https://github.com/alkarim99/food-recipe-apps/releases) <br>
-[Frontend Repository](https://github.com/alkarim99/food-recipe-fe-react)
+[Frontend Repository](https://github.com/alkarim99/food-recipe-fe-react) <br>
+[Mobile Apps Repository](https://github.com/alkarim99/food-recipe-apps) <br>
+[Release APK](https://github.com/alkarim99/food-recipe-apps/releases)
 
 ## Installation
 
