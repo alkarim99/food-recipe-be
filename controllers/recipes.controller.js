@@ -106,10 +106,43 @@ const getById = async (req, res) => {
   }
 }
 
+const getByCategory = async (req, res) => {
+  try {
+    const {
+      params: { category },
+    } = req
+    if (!category) {
+      res.status(400).json({
+        status: false,
+        message: "Please fill the category!",
+      })
+      return
+    }
+    const query = await model.getByCategory(category)
+    if (!query?.length) {
+      res.status(400).json({
+        status: false,
+        message: `Recipes for category ${category} is not found!`,
+      })
+    }
+    res.json({
+      status: true,
+      message: "Get success",
+      data: query,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      status: false,
+      message: "Error in server",
+    })
+  }
+}
+
 const create = async (req, res) => {
   try {
-    const { title, ingredients, videoLink, user_id } = req.body
-    if (!(title && ingredients && videoLink && user_id)) {
+    const { title, ingredients, videoLink, user_id, category } = req.body
+    if (!(title && ingredients && videoLink && user_id && category)) {
       res.status(400).json({
         status: false,
         message: "Bad input, please complete all of fields",
@@ -171,6 +204,7 @@ const create = async (req, res) => {
           ingredients,
           videoLink,
           user_id,
+          category,
         }
         await model.create(payload)
         res.status(200).send({
@@ -201,7 +235,7 @@ const update = async (req, res) => {
       process.env.JWT_PRIVATE_KEY,
       async (err, { id, role }) => {
         const {
-          body: { title, ingredients, videoLink, user_id },
+          body: { title, ingredients, videoLink, user_id, category },
         } = req
         const idRecipe = req?.params?.id
         if (isNaN(idRecipe)) {
@@ -231,6 +265,7 @@ const update = async (req, res) => {
           ingredients: ingredients ?? checkData[0].ingredients,
           videoLink: videoLink ?? checkData[0].videoLink,
           user_id: user_id ?? checkData[0].user_id,
+          category: category ?? checkData[0].category,
         }
         if (payload.title.split(" ").length < 2) {
           res.status(400).json({
@@ -483,6 +518,7 @@ const seeder = async (req, res) => {
 module.exports = {
   getAll,
   getById,
+  getByCategory,
   create,
   update,
   updatePhoto,

@@ -29,6 +29,16 @@ const getById = async (id) => {
   }
 }
 
+const getByCategory = async (category) => {
+  try {
+    const query =
+      await db`SELECT * FROM recipes where category LIKE LOWER(${category})`
+    return query
+  } catch (error) {
+    return error
+  }
+}
+
 const create = async (payload) => {
   try {
     const query = await db`INSERT INTO recipes ${db(
@@ -37,7 +47,8 @@ const create = async (payload) => {
       "title",
       "ingredients",
       "videoLink",
-      "user_id"
+      "user_id",
+      "category"
     )} returning *`
     return query
   } catch (error) {
@@ -52,7 +63,8 @@ const update = async (payload, id) => {
       "title",
       "ingredients",
       "videoLink",
-      "user_id"
+      "user_id",
+      "category"
     )} WHERE id = ${id} returning *`
     return query
   } catch (error) {
@@ -84,6 +96,7 @@ const deleteRecipe = async (id) => {
 module.exports = {
   getAll,
   getById,
+  getByCategory,
   create,
   update,
   updatePhoto,
