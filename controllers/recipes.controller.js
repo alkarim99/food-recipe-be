@@ -120,7 +120,7 @@ const getByCategory = async (req, res) => {
     }
     const query = await model.getByCategory(category)
     if (!query?.length) {
-      res.status(400).json({
+      res.status(200).json({
         status: false,
         message: `Recipes for category ${category} is not found!`,
       })
