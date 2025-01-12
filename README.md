@@ -18,7 +18,7 @@ Food Recipe Back-End uses a number of open source projects to work properly:
 - [Express](https://expressjs.com/) - fast node.js network app framework
 - [PostgreSQL](https://www.postgresql.org/) - the powerfull database
 
-And of course Food Recipe Back-End itself is open source with a [public repository](https://github.com/alkarim99/food-recipe-be) on GitHub and also You can try this [backend deploy](https://vast-mite-smock.cyclic.app/).
+And of course Food Recipe Back-End itself is open source with a [public repository](https://github.com/alkarim99/food-recipe-be) on GitHub and also You can try this [backend deploy](https://food-recipe-be-nine.vercel.app/).
 
 [Postman Documentation](https://documenter.getpostman.com/view/20247883/2s9XxzuYUo) <br>
 [Deploy Frontend](https://food-recipe-fe-react.vercel.app/) <br>
