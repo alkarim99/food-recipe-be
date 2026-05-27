@@ -66,7 +66,7 @@ const getAll = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -87,7 +87,7 @@ const getById = async (req, res) => {
     }
     const query = await model.getById(id)
     if (!query?.length) {
-      res.status(400).json({
+      return res.status(400).json({
         status: false,
         message: `ID ${id} not found!`,
       })
@@ -99,7 +99,7 @@ const getById = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -120,7 +120,7 @@ const getByCategory = async (req, res) => {
     }
     const query = await model.getByCategory(category)
     if (!query?.length) {
-      res.status(200).json({
+      return res.status(200).json({
         status: false,
         message: `Recipes for category ${category} is not found!`,
       })
@@ -132,7 +132,7 @@ const getByCategory = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -151,7 +151,7 @@ const create = async (req, res) => {
     }
     const { recipePicture } = req?.files ?? {}
     if (!recipePicture) {
-      res.status(400).send({
+      return res.status(400).send({
         status: false,
         message: "Recipe Picture is required",
       })
@@ -159,13 +159,13 @@ const create = async (req, res) => {
     let mimeType = recipePicture.mimetype.split("/")[1]
     let allowFile = ["jpeg", "jpg", "png", "webp"]
     if (!allowFile?.find((item) => item === mimeType)) {
-      res.status(400).send({
+      return res.status(400).send({
         status: false,
         message: "Only accept jpeg, jpg, png, webp",
       })
     }
     if (recipePicture.size > 2000000) {
-      res.status(400).send({
+      return res.status(400).send({
         status: false,
         message: "File to big, max size 2MB",
       })
@@ -207,21 +207,21 @@ const create = async (req, res) => {
           category,
         }
         await model.create(payload)
-        res.status(200).send({
+        return res.status(200).send({
           status: true,
           message: "Success insert data",
           data: payload,
         })
       })
       .catch((err) => {
-        res.status(400).send({
+        return res.status(400).send({
           status: false,
           message: err,
         })
       })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -301,7 +301,7 @@ const update = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -363,14 +363,14 @@ const updatePhoto = async (req, res) => {
               recipePicture: data?.secure_url,
             }
             await model.updatePhoto(payload, idRecipe)
-            res.status(200).send({
+            return res.status(200).send({
               status: true,
               message: "Success upload",
               data: payload,
             })
           })
           .catch((err) => {
-            res.status(400).send({
+            return res.status(400).send({
               status: false,
               message: err,
             })
@@ -378,7 +378,7 @@ const updatePhoto = async (req, res) => {
       }
     )
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error on server",
     })
@@ -424,7 +424,7 @@ const deleteRecipes = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -440,6 +440,7 @@ const recipes = [
       "Nasi putih, Wortel, Bawang putih, Bawang merah, Cabai merah, Kecap manis, Kaldu ayam, Daun bawang, Minyak goreng",
     videoLink: "https://youtu.be/BQZEiWAZyKM",
     userId: 1,
+    category: "lunch",
   },
   {
     recipePicture:
@@ -449,6 +450,7 @@ const recipes = [
       "Mie telor, Taouge, Sawi, Ayam kampung, Bawang putih, Bawang merah, Cabai rawit, Garam, Merica putih bubuk, Gula pasir, Kecap manis, Minyak sayur, Timun, Bawang goreng",
     videoLink: "https://youtu.be/46CsR1Ma0EA",
     userId: 2,
+    category: "lunch",
   },
   {
     recipePicture:
@@ -458,6 +460,7 @@ const recipes = [
       "Tahu putih, Telor ayam, Kaldu ayam, Merica putih bubuk, Kol, Taoge, Minyak goreng, Cabe rawit merah, Bawang putih, Kacang tanah goreng, Air hangat, Air jeruk nipis, Kecap manis, Bawang goreng, Seledri",
     videoLink: "https://youtu.be/B77Pf_PGl_Q",
     userId: 3,
+    category: "snack",
   },
   {
     recipePicture:
@@ -467,6 +470,7 @@ const recipes = [
       "Ayam, Air matang, Santan, Royco bumbu rendang, Kacang merah, Minyak sayur, Bawang putih, Bawang merah, Jahe, Cabai merah, Cabai rawit merah",
     videoLink: "https://youtu.be/GS4i96HVzKw",
     userId: 4,
+    category: "dinner",
   },
   {
     recipePicture:
@@ -476,6 +480,7 @@ const recipes = [
       "Ayam, Bawang putih, Merica butiran, Garam, Kecap manis, Mentega, Bawang bombay, Kecap inggris, Kecap asin, Air jeruk nipis",
     videoLink: "https://youtu.be/TBq8A-jYKd4",
     userId: 5,
+    category: "dinner",
   },
   {
     recipePicture:
@@ -485,6 +490,7 @@ const recipes = [
       "Ayam, Tepung maizena, Telor ayam, Royco kaldu ayam, Ketumbar bubuk, Garam, Merica putih bubuk, Tepung terigu, Tepung Beras, Baking powder, Cabai rawit merah, Bawang merah, Bawang putih, Minyak",
     videoLink: "https://youtu.be/cuFQ0kFQfgs",
     userId: 6,
+    category: "lunch",
   },
 ]
 
@@ -498,6 +504,7 @@ const seeder = async (req, res) => {
           ingredients: recipe.ingredients,
           videoLink: recipe.videoLink,
           user_id: recipe.userId,
+          category: recipe.category,
         }
         await model.create(payload)
       })
@@ -508,7 +515,7 @@ const seeder = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })

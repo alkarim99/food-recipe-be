@@ -35,7 +35,7 @@ const getAll = async (req, res) => {
         } else {
           const query = await model.getById(id)
           if (!query?.length) {
-            res.json({
+            return res.json({
               status: false,
               message: `ID ${id} not found!`,
             })
@@ -50,7 +50,7 @@ const getAll = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -76,7 +76,7 @@ const getById = async (req, res) => {
           }
           const query = await model.getById(id)
           if (!query?.length) {
-            res.json({
+            return res.json({
               status: false,
               message: `ID ${id} not found!`,
             })
@@ -97,7 +97,7 @@ const getById = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -185,7 +185,7 @@ const create = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -297,7 +297,7 @@ const update = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -312,7 +312,7 @@ const updatePhoto = async (req, res) => {
       async (err, { id }) => {
         const { photo } = req?.files ?? {}
         if (!photo) {
-          res.status(400).send({
+          return res.status(400).send({
             status: false,
             message: "Photo is required",
           })
@@ -342,14 +342,14 @@ const updatePhoto = async (req, res) => {
               profilePicture: data?.secure_url,
             }
             await model.updatePhoto(payload, id)
-            res.status(200).send({
+            return res.status(200).send({
               status: true,
               message: "Success upload",
               data: payload,
             })
           })
           .catch((err) => {
-            res.status(400).send({
+            return res.status(400).send({
               status: false,
               message: err,
             })
@@ -358,7 +358,7 @@ const updatePhoto = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error on server",
     })
@@ -389,7 +389,7 @@ const deleteUser = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })
@@ -455,6 +455,7 @@ const seeder = async (req, res) => {
               phoneNumber: user.phoneNumber,
               password: user.password,
               profilePicture: user.profilePicture,
+              role: 2,
             }
             await model.create(payload)
           })
@@ -473,7 +474,7 @@ const seeder = async (req, res) => {
     )
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })

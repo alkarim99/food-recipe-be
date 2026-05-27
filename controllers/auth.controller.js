@@ -8,14 +8,14 @@ const login = async (req, res) => {
       body: { email, password },
     } = req
     if (!(email && password)) {
-      res.status(400).send({
+      return res.status(400).send({
         status: false,
         message: "Bad input, please complete all of fields",
       })
     }
     const checkUser = await model.getByEmail(email)
     if (!checkUser?.length) {
-      res.status(400).json({
+      return res.status(400).json({
         status: false,
         message: `Account not registered!`,
       })
@@ -33,7 +33,7 @@ const login = async (req, res) => {
           token,
         })
       } else {
-        res.status(400).json({
+        return res.status(400).json({
           status: false,
           message: `Wrong email and password combination!`,
         })
@@ -41,7 +41,7 @@ const login = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).send({
+    return res.status(500).send({
       status: false,
       message: "Error in server",
     })

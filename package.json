@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "node index.js",
     "check": "standard --fix"
   },
   "dependencies": {

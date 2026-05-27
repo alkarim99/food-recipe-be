@@ -27,7 +27,13 @@ app.use(xss())
 //   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 // app.use(cors(corsOptions))
-app.use(cors())
+if (!process.env.FRONTEND_URL) {
+  console.warn('WARNING: FRONTEND_URL env var is not set. CORS will block all origins.');
+}
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}))
 
 app.use(
   fileUpload({
@@ -49,6 +55,6 @@ app.get("/", (req, res) => {
 // Other routes
 app.use(invalidRoutes)
 
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("App running in port 8000")
 })
