@@ -141,22 +141,22 @@ const getByCategory = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const { title, ingredients, videoLink, user_id, category } = req.body
-    if (!(title && ingredients && videoLink && user_id && category)) {
+    const { title, ingredients, videolink, user_id, category } = req.body
+    if (!(title && ingredients && videolink && user_id && category)) {
       res.status(400).json({
         status: false,
         message: "Bad input, please complete all of fields",
       })
       return
     }
-    const { recipePicture } = req?.files ?? {}
-    if (!recipePicture) {
+    const { recipepicture } = req?.files ?? {}
+    if (!recipepicture) {
       return res.status(400).send({
         status: false,
         message: "Recipe Picture is required",
       })
     }
-    let mimeType = recipePicture.mimetype.split("/")[1]
+    let mimeType = recipepicture.mimetype.split("/")[1]
     let allowFile = ["jpeg", "jpg", "png", "webp"]
     if (!allowFile?.find((item) => item === mimeType)) {
       return res.status(400).send({
@@ -164,7 +164,7 @@ const create = async (req, res) => {
         message: "Only accept jpeg, jpg, png, webp",
       })
     }
-    if (recipePicture.size > 2000000) {
+    if (recipepicture.size > 2000000) {
       return res.status(400).send({
         status: false,
         message: "File to big, max size 2MB",
@@ -185,7 +185,7 @@ const create = async (req, res) => {
       })
       return
     }
-    const checkUrlValid = isUrlValid(videoLink)
+    const checkUrlValid = isUrlValid(videolink)
     if (!checkUrlValid) {
       res.status(400).json({
         status: false,
@@ -193,16 +193,16 @@ const create = async (req, res) => {
       })
       return
     }
-    const upload = cloudinary.uploader.upload(recipePicture.tempFilePath, {
+    const upload = cloudinary.uploader.upload(recipepicture.tempFilePath, {
       public_id: new Date().toISOString(),
     })
     upload
       .then(async (data) => {
         const payload = {
-          recipePicture: data?.secure_url,
+          recipepicture: data?.secure_url,
           title,
           ingredients,
-          videoLink,
+          videolink,
           user_id,
           category,
         }
@@ -235,7 +235,7 @@ const update = async (req, res) => {
       process.env.JWT_PRIVATE_KEY,
       async (err, { id, role }) => {
         const {
-          body: { title, ingredients, videoLink, user_id, category },
+          body: { title, ingredients, videolink, user_id, category },
         } = req
         const idRecipe = req?.params?.id
         if (isNaN(idRecipe)) {
@@ -263,7 +263,7 @@ const update = async (req, res) => {
         const payload = {
           title: title ?? checkData[0].title,
           ingredients: ingredients ?? checkData[0].ingredients,
-          videoLink: videoLink ?? checkData[0].videoLink,
+          videolink: videolink ?? checkData[0].videolink,
           user_id: user_id ?? checkData[0].user_id,
           category: category ?? checkData[0].category,
         }
@@ -283,7 +283,7 @@ const update = async (req, res) => {
           })
           return
         }
-        const checkUrlValid = isUrlValid(payload.videoLink)
+        const checkUrlValid = isUrlValid(payload.videolink)
         if (!checkUrlValid) {
           res.status(400).json({
             status: false,
@@ -360,7 +360,7 @@ const updatePhoto = async (req, res) => {
         upload
           .then(async (data) => {
             const payload = {
-              recipePicture: data?.secure_url,
+              recipepicture: data?.secure_url,
             }
             await model.updatePhoto(payload, idRecipe)
             return res.status(200).send({
@@ -433,62 +433,62 @@ const deleteRecipes = async (req, res) => {
 
 const recipes = [
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2020/04/Nasi-Goreng-Sederhana-780x440.jpg",
     title: "Resep Nasi Goreng Sederhana",
     ingredients:
       "Nasi putih, Wortel, Bawang putih, Bawang merah, Cabai merah, Kecap manis, Kaldu ayam, Daun bawang, Minyak goreng",
-    videoLink: "https://youtu.be/BQZEiWAZyKM",
+    videolink: "https://youtu.be/BQZEiWAZyKM",
     userId: 1,
     category: "lunch",
   },
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2018/04/cara-membuat-mie-goreng-telur-780x440.jpg",
     title: "Resep Mie Goreng Ala Restoran",
     ingredients:
       "Mie telor, Taouge, Sawi, Ayam kampung, Bawang putih, Bawang merah, Cabai rawit, Garam, Merica putih bubuk, Gula pasir, Kecap manis, Minyak sayur, Timun, Bawang goreng",
-    videoLink: "https://youtu.be/46CsR1Ma0EA",
+    videolink: "https://youtu.be/46CsR1Ma0EA",
     userId: 2,
     category: "lunch",
   },
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2018/11/tahu-telur-MAHI-1-780x440.jpg",
     title: "Resep Tahu Telor Surabaya",
     ingredients:
       "Tahu putih, Telor ayam, Kaldu ayam, Merica putih bubuk, Kol, Taoge, Minyak goreng, Cabe rawit merah, Bawang putih, Kacang tanah goreng, Air hangat, Air jeruk nipis, Kecap manis, Bawang goreng, Seledri",
-    videoLink: "https://youtu.be/B77Pf_PGl_Q",
+    videolink: "https://youtu.be/B77Pf_PGl_Q",
     userId: 3,
     category: "snack",
   },
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2018/10/ayam-rendang-MAHI-4-780x440.jpg",
     title: "Resep Rendang Ayam Rumahan",
     ingredients:
       "Ayam, Air matang, Santan, Royco bumbu rendang, Kacang merah, Minyak sayur, Bawang putih, Bawang merah, Jahe, Cabai merah, Cabai rawit merah",
-    videoLink: "https://youtu.be/GS4i96HVzKw",
+    videolink: "https://youtu.be/GS4i96HVzKw",
     userId: 4,
     category: "dinner",
   },
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2018/04/ayam-goreng-mentega-e1681288291125-780x440.jpg",
     title: "Resep Rendang Ayam Rumahan",
     ingredients:
       "Ayam, Bawang putih, Merica butiran, Garam, Kecap manis, Mentega, Bawang bombay, Kecap inggris, Kecap asin, Air jeruk nipis",
-    videoLink: "https://youtu.be/TBq8A-jYKd4",
+    videolink: "https://youtu.be/TBq8A-jYKd4",
     userId: 5,
     category: "dinner",
   },
   {
-    recipePicture:
+    recipepicture:
       "https://www.masakapahariini.com/wp-content/uploads/2023/03/shutterstock_1949306203-780x440.jpg",
     title: "Resep Ayam Geprek Sambal Bawang",
     ingredients:
       "Ayam, Tepung maizena, Telor ayam, Royco kaldu ayam, Ketumbar bubuk, Garam, Merica putih bubuk, Tepung terigu, Tepung Beras, Baking powder, Cabai rawit merah, Bawang merah, Bawang putih, Minyak",
-    videoLink: "https://youtu.be/cuFQ0kFQfgs",
+    videolink: "https://youtu.be/cuFQ0kFQfgs",
     userId: 6,
     category: "lunch",
   },
@@ -496,29 +496,48 @@ const recipes = [
 
 const seeder = async (req, res) => {
   try {
-    for (let index = 0; index < 2; index++) {
-      recipes.forEach(async (recipe) => {
-        const payload = {
-          recipePicture: recipe.recipePicture,
-          title: recipe.title,
-          ingredients: recipe.ingredients,
-          videoLink: recipe.videoLink,
-          user_id: recipe.userId,
-          category: recipe.category,
+    jwt.verify(
+      getToken(req),
+      process.env.JWT_PRIVATE_KEY,
+      async (err, { role }) => {
+        if (role == 1) {
+          for (const recipe of recipes) {
+            try {
+              const payload = {
+                recipepicture: recipe.recipepicture,
+                title: recipe.title,
+                ingredients: recipe.ingredients,
+                videolink: recipe.videolink,
+                user_id: recipe.userId,
+                category: recipe.category,
+              };
+              const result = await model.create(payload);
+              if (result instanceof Error) {
+                console.log("ERROR INSERT:", result);
+              }
+            } catch (err) {
+              console.log("ERROR INSERT:", err);
+            }
+          }
+          res.send({
+            status: true,
+            message: "Success insert data",
+          });
+        } else {
+          res.status(400).json({
+            status: false,
+            message: "Not authorized user!",
+          });
+          return;
         }
-        await model.create(payload)
-      })
-    }
-    res.send({
-      status: true,
-      message: "Success insert data",
-    })
+      },
+    );
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).send({
       status: false,
       message: "Error in server",
-    })
+    });
   }
 }
 

@@ -1,4 +1,4 @@
-const postgres = require("postgres")
+const postgres = require("postgres");
 
 const sql = postgres({
   host: process.env.DB_HOST,
@@ -6,10 +6,9 @@ const sql = postgres({
   database: process.env.DB_NAME,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
-  ssl: {
-    rejectUnauthorized: true,
-    ca: process.env.DB_CA_CERT,
-  },
-}) // will use psql environment variables
+  ssl: process.env.DB_CA_CERT
+    ? { rejectUnauthorized: true, ca: process.env.DB_CA_CERT }
+    : false,
+}); // will use psql environment variables
 
-module.exports = sql
+module.exports = sql;

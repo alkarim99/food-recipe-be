@@ -34,7 +34,7 @@ const create = async (payload) => {
       payload,
       "email",
       "fullname",
-      "phoneNumber",
+      "phonenumber",
       "password",
       "role"
     )} returning *`
@@ -50,7 +50,7 @@ const update = async (payload, id) => {
       payload,
       "email",
       "fullname",
-      "phoneNumber",
+      "phonenumber",
       "password",
       "role"
     )} WHERE id = ${id} returning *`
