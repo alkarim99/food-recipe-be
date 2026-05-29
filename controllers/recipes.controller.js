@@ -434,7 +434,7 @@ const deleteRecipes = async (req, res) => {
 const recipes = [
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2020/04/Nasi-Goreng-Sederhana-780x440.jpg",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/nasi-goreng-sederhana_wznxgj.avif",
     title: "Resep Nasi Goreng Sederhana",
     ingredients:
       "Nasi putih, Wortel, Bawang putih, Bawang merah, Cabai merah, Kecap manis, Kaldu ayam, Daun bawang, Minyak goreng",
@@ -444,52 +444,52 @@ const recipes = [
   },
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2018/04/cara-membuat-mie-goreng-telur-780x440.jpg",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/mie-goreng-restoran_xjdars.jpg",
     title: "Resep Mie Goreng Ala Restoran",
     ingredients:
       "Mie telor, Taouge, Sawi, Ayam kampung, Bawang putih, Bawang merah, Cabai rawit, Garam, Merica putih bubuk, Gula pasir, Kecap manis, Minyak sayur, Timun, Bawang goreng",
     videolink: "https://youtu.be/46CsR1Ma0EA",
-    userId: 2,
+    userId: 1,
     category: "lunch",
   },
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2018/11/tahu-telur-MAHI-1-780x440.jpg",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/tahu-telor-sby_y3yozz.avif",
     title: "Resep Tahu Telor Surabaya",
     ingredients:
       "Tahu putih, Telor ayam, Kaldu ayam, Merica putih bubuk, Kol, Taoge, Minyak goreng, Cabe rawit merah, Bawang putih, Kacang tanah goreng, Air hangat, Air jeruk nipis, Kecap manis, Bawang goreng, Seledri",
     videolink: "https://youtu.be/B77Pf_PGl_Q",
-    userId: 3,
+    userId: 1,
     category: "snack",
   },
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2018/10/ayam-rendang-MAHI-4-780x440.jpg",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016487/rendang-ayam_mxwt1j.webp",
     title: "Resep Rendang Ayam Rumahan",
     ingredients:
       "Ayam, Air matang, Santan, Royco bumbu rendang, Kacang merah, Minyak sayur, Bawang putih, Bawang merah, Jahe, Cabai merah, Cabai rawit merah",
     videolink: "https://youtu.be/GS4i96HVzKw",
-    userId: 4,
+    userId: 1,
     category: "dinner",
   },
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2018/04/ayam-goreng-mentega-e1681288291125-780x440.jpg",
-    title: "Resep Rendang Ayam Rumahan",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/ayam-goreng-mentega_ik949u.webp",
+    title: "Resep Ayam Goreng Mentega",
     ingredients:
       "Ayam, Bawang putih, Merica butiran, Garam, Kecap manis, Mentega, Bawang bombay, Kecap inggris, Kecap asin, Air jeruk nipis",
     videolink: "https://youtu.be/TBq8A-jYKd4",
-    userId: 5,
+    userId: 1,
     category: "dinner",
   },
   {
     recipepicture:
-      "https://www.masakapahariini.com/wp-content/uploads/2023/03/shutterstock_1949306203-780x440.jpg",
+      "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/ayam-geprek_rm5pxa.avif",
     title: "Resep Ayam Geprek Sambal Bawang",
     ingredients:
       "Ayam, Tepung maizena, Telor ayam, Royco kaldu ayam, Ketumbar bubuk, Garam, Merica putih bubuk, Tepung terigu, Tepung Beras, Baking powder, Cabai rawit merah, Bawang merah, Bawang putih, Minyak",
     videolink: "https://youtu.be/cuFQ0kFQfgs",
-    userId: 6,
+    userId: 1,
     category: "lunch",
   },
 ]
