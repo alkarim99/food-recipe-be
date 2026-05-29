@@ -141,22 +141,22 @@ const getByCategory = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const { title, ingredients, videolink, user_id, category } = req.body
-    if (!(title && ingredients && videolink && user_id && category)) {
+    const { title, ingredients, video_link, user_id, category } = req.body
+    if (!(title && ingredients && video_link && user_id && category)) {
       res.status(400).json({
         status: false,
         message: "Bad input, please complete all of fields",
       })
       return
     }
-    const { recipepicture } = req?.files ?? {}
-    if (!recipepicture) {
+    const { recipe_picture } = req?.files ?? {}
+    if (!recipe_picture) {
       return res.status(400).send({
         status: false,
         message: "Recipe Picture is required",
       })
     }
-    let mimeType = recipepicture.mimetype.split("/")[1]
+    let mimeType = recipe_picture.mimetype.split("/")[1]
     let allowFile = ["jpeg", "jpg", "png", "webp"]
     if (!allowFile?.find((item) => item === mimeType)) {
       return res.status(400).send({
@@ -164,7 +164,7 @@ const create = async (req, res) => {
         message: "Only accept jpeg, jpg, png, webp",
       })
     }
-    if (recipepicture.size > 2000000) {
+    if (recipe_picture.size > 2000000) {
       return res.status(400).send({
         status: false,
         message: "File to big, max size 2MB",
@@ -185,7 +185,7 @@ const create = async (req, res) => {
       })
       return
     }
-    const checkUrlValid = isUrlValid(videolink)
+    const checkUrlValid = isUrlValid(video_link)
     if (!checkUrlValid) {
       res.status(400).json({
         status: false,
@@ -193,16 +193,16 @@ const create = async (req, res) => {
       })
       return
     }
-    const upload = cloudinary.uploader.upload(recipepicture.tempFilePath, {
+    const upload = cloudinary.uploader.upload(recipe_picture.tempFilePath, {
       public_id: new Date().toISOString(),
     })
     upload
       .then(async (data) => {
         const payload = {
-          recipepicture: data?.secure_url,
+          recipe_picture: data?.secure_url,
           title,
           ingredients,
-          videolink,
+          video_link,
           user_id,
           category,
         }
@@ -235,7 +235,7 @@ const update = async (req, res) => {
       process.env.JWT_PRIVATE_KEY,
       async (err, { id, role }) => {
         const {
-          body: { title, ingredients, videolink, user_id, category },
+          body: { title, ingredients, video_link, user_id, category },
         } = req
         const idRecipe = req?.params?.id
         if (isNaN(idRecipe)) {
@@ -263,7 +263,7 @@ const update = async (req, res) => {
         const payload = {
           title: title ?? checkData[0].title,
           ingredients: ingredients ?? checkData[0].ingredients,
-          videolink: videolink ?? checkData[0].videolink,
+          video_link: video_link ?? checkData[0].video_link,
           user_id: user_id ?? checkData[0].user_id,
           category: category ?? checkData[0].category,
         }
@@ -283,7 +283,7 @@ const update = async (req, res) => {
           })
           return
         }
-        const checkUrlValid = isUrlValid(payload.videolink)
+        const checkUrlValid = isUrlValid(payload.video_link)
         if (!checkUrlValid) {
           res.status(400).json({
             status: false,
@@ -360,7 +360,7 @@ const updatePhoto = async (req, res) => {
         upload
           .then(async (data) => {
             const payload = {
-              recipepicture: data?.secure_url,
+              recipe_picture: data?.secure_url,
             }
             await model.updatePhoto(payload, idRecipe)
             return res.status(200).send({
@@ -433,62 +433,62 @@ const deleteRecipes = async (req, res) => {
 
 const recipes = [
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/nasi-goreng-sederhana_wznxgj.avif",
     title: "Resep Nasi Goreng Sederhana",
     ingredients:
       "Nasi putih, Wortel, Bawang putih, Bawang merah, Cabai merah, Kecap manis, Kaldu ayam, Daun bawang, Minyak goreng",
-    videolink: "https://youtu.be/BQZEiWAZyKM",
+    video_link: "https://youtu.be/BQZEiWAZyKM",
     userId: 1,
     category: "lunch",
   },
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/mie-goreng-restoran_xjdars.jpg",
     title: "Resep Mie Goreng Ala Restoran",
     ingredients:
       "Mie telor, Taouge, Sawi, Ayam kampung, Bawang putih, Bawang merah, Cabai rawit, Garam, Merica putih bubuk, Gula pasir, Kecap manis, Minyak sayur, Timun, Bawang goreng",
-    videolink: "https://youtu.be/46CsR1Ma0EA",
+    video_link: "https://youtu.be/46CsR1Ma0EA",
     userId: 1,
     category: "lunch",
   },
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/tahu-telor-sby_y3yozz.avif",
     title: "Resep Tahu Telor Surabaya",
     ingredients:
       "Tahu putih, Telor ayam, Kaldu ayam, Merica putih bubuk, Kol, Taoge, Minyak goreng, Cabe rawit merah, Bawang putih, Kacang tanah goreng, Air hangat, Air jeruk nipis, Kecap manis, Bawang goreng, Seledri",
-    videolink: "https://youtu.be/B77Pf_PGl_Q",
+    video_link: "https://youtu.be/B77Pf_PGl_Q",
     userId: 1,
     category: "snack",
   },
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016487/rendang-ayam_mxwt1j.webp",
     title: "Resep Rendang Ayam Rumahan",
     ingredients:
       "Ayam, Air matang, Santan, Royco bumbu rendang, Kacang merah, Minyak sayur, Bawang putih, Bawang merah, Jahe, Cabai merah, Cabai rawit merah",
-    videolink: "https://youtu.be/GS4i96HVzKw",
+    video_link: "https://youtu.be/GS4i96HVzKw",
     userId: 1,
     category: "dinner",
   },
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/ayam-goreng-mentega_ik949u.webp",
     title: "Resep Ayam Goreng Mentega",
     ingredients:
       "Ayam, Bawang putih, Merica butiran, Garam, Kecap manis, Mentega, Bawang bombay, Kecap inggris, Kecap asin, Air jeruk nipis",
-    videolink: "https://youtu.be/TBq8A-jYKd4",
+    video_link: "https://youtu.be/TBq8A-jYKd4",
     userId: 1,
     category: "dinner",
   },
   {
-    recipepicture:
+    recipe_picture:
       "https://res.cloudinary.com/drqodwhwd/image/upload/v1780016486/ayam-geprek_rm5pxa.avif",
     title: "Resep Ayam Geprek Sambal Bawang",
     ingredients:
       "Ayam, Tepung maizena, Telor ayam, Royco kaldu ayam, Ketumbar bubuk, Garam, Merica putih bubuk, Tepung terigu, Tepung Beras, Baking powder, Cabai rawit merah, Bawang merah, Bawang putih, Minyak",
-    videolink: "https://youtu.be/cuFQ0kFQfgs",
+    video_link: "https://youtu.be/cuFQ0kFQfgs",
     userId: 1,
     category: "lunch",
   },
@@ -504,10 +504,10 @@ const seeder = async (req, res) => {
           for (const recipe of recipes) {
             try {
               const payload = {
-                recipepicture: recipe.recipepicture,
+                recipe_picture: recipe.recipe_picture,
                 title: recipe.title,
                 ingredients: recipe.ingredients,
-                videolink: recipe.videolink,
+                video_link: recipe.video_link,
                 user_id: recipe.userId,
                 category: recipe.category,
               };

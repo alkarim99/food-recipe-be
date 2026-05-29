@@ -64,7 +64,7 @@ const updatePhoto = async (payload, id) => {
   try {
     const query = await db`UPDATE users set ${db(
       payload,
-      "profilePicture"
+      "profile_picture"
     )} WHERE id = ${id} returning *`
     return query
   } catch (error) {
