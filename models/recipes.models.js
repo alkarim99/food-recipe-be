@@ -43,10 +43,10 @@ const create = async (payload) => {
   try {
     const query = await db`INSERT INTO recipes ${db(
       payload,
-      "recipepicture",
+      "recipe_picture",
       "title",
       "ingredients",
-      "videolink",
+      "video_link",
       "user_id",
       "category"
     )} returning *`
@@ -62,7 +62,7 @@ const update = async (payload, id) => {
       payload,
       "title",
       "ingredients",
-      "videolink",
+      "video_link",
       "user_id",
       "category"
     )} WHERE id = ${id} returning *`
@@ -76,7 +76,7 @@ const updatePhoto = async (payload, id) => {
   try {
     const query = await db`UPDATE recipes set ${db(
       payload,
-      "recipepicture"
+      "recipe_picture"
     )} WHERE id = ${id} returning *`
     return query
   } catch (error) {

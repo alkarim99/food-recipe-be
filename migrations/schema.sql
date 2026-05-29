@@ -10,16 +10,16 @@ CREATE TABLE IF NOT EXISTS users (
   phonenumber   TEXT NOT NULL,
   password      TEXT NOT NULL,
   role          INTEGER NOT NULL DEFAULT 2,
-  profilePicture TEXT DEFAULT 'https://res.cloudinary.com/drqodwhwd/image/upload/v1779884611/default-profile-picture_pjh4hd.jpg'
+  profile_picture TEXT DEFAULT 'https://res.cloudinary.com/drqodwhwd/image/upload/v1779884611/default-profile-picture_pjh4hd.jpg'
 );
 
 -- Stores recipes created by users
 CREATE TABLE IF NOT EXISTS recipes (
   id            SERIAL PRIMARY KEY,
-  recipepicture TEXT NOT NULL,
+  recipe_picture TEXT NOT NULL,
   title         TEXT NOT NULL,
   ingredients   TEXT NOT NULL,
-  videolink     TEXT,
+  video_link    TEXT,
   user_id       INTEGER NOT NULL REFERENCES users(id),
   category      TEXT NOT NULL
 );

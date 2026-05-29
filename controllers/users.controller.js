@@ -338,7 +338,7 @@ const updatePhoto = async (req, res) => {
         upload
           .then(async (data) => {
             const payload = {
-              profilePicture: data?.secure_url,
+              profile_picture: data?.secure_url,
             };
             await model.updatePhoto(payload, id);
             return res.status(200).send({
@@ -401,42 +401,42 @@ const users = [
     fullname: "Abubakar Adeni",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
   {
     email: "irham@gmail.com",
     fullname: "Irham Nofrianda",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
   {
     email: "isnan@gmail.com",
     fullname: "Isnan Arif Cahyadi",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
   {
     email: "rizky@gmail.com",
     fullname: "Rizki Suprayogo",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
   {
     email: "sony@gmail.com",
     fullname: "Muhammad Sony Setiawan",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
   {
     email: "naufal@gmail.com",
     fullname: "Naufal Luthfi Saputra",
     phonenumber: "082167895432",
     password: "password",
-    profilePicture: null,
+    profile_picture: null,
   },
 ];
 
@@ -456,7 +456,7 @@ const seeder = async (req, res) => {
                 fullname: user.fullname,
                 phonenumber: user.phonenumber,
                 password: hash,
-                profilePicture: user.profilePicture,
+                profile_picture: user.profile_picture,
                 role: 2,
               };
               const result = await model.create(payload);
