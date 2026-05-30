@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: dulcloud-recipe-be
+    runs-on: [self-hosted, Linux, X64]
 
     steps:
       - name: Pull latest code
